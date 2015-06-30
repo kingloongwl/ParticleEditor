@@ -64,6 +64,7 @@ SET(ParticleEditor_TARGET_H
 	include/MainWindow.h
 	include/OsgScene.h
 	include/OsgWidget.h
+	include/SquareGrid.h
 
 	)
 
@@ -72,6 +73,7 @@ SET(ParticleEditor_TARGET_SRC
 	src/MainWindow.cpp
 	src/OsgScene.cpp
 	src/OsgWidget.cpp
+	src/SquareGrid.cpp
 	)
 
 ADD_EXECUTABLE(ParticleEditor

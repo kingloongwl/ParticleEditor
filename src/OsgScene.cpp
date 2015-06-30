@@ -1,5 +1,6 @@
 ﻿
 #include "OsgScene.h"
+#include "SquareGrid.h"
 
 #include <osgGA/StateSetManipulator>
 #include <osgGA/TrackballManipulator>
@@ -42,6 +43,11 @@ OsgScene::OsgScene()
 	camera->setProjectionMatrixAsPerspective( fovy, traits->width/traits->height, z1, z2 );
 	
 	_viewer->setCameraManipulator( new osgGA::TrackballManipulator );
+	
+	
+	_sceneRoot = new osg::Group;
+	_sceneRoot->addChild( new SquareGrid );
+	_viewer->setSceneData( _sceneRoot );
 	
 }
 

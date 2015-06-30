@@ -7,6 +7,7 @@
   */
   
 #include <osg/Referenced>
+#include <osg/Group>
 #include <osgViewer/Viewer>
  
 class OsgScene : public osg::Referenced
@@ -22,6 +23,7 @@ public:
 	
 private:
 	osg::ref_ptr<osgViewer::Viewer> _viewer;
+	osg::ref_ptr<osg::Group>		_sceneRoot;
 		
 };
 
