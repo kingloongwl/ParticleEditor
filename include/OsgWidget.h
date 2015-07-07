@@ -6,8 +6,8 @@
 	将OSG填入Qt界面中
 */
 
-#include <QtGui/QWidget>
-#include <QtCore/QTimer>
+#include <QWidget>
+#include <QTimer>
 
 #include <osgViewer/Viewer>
 

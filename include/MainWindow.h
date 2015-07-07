@@ -6,7 +6,7 @@
 	主窗口
 */
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 
 
 class MainWindow : public QMainWindow

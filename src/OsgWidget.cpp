@@ -3,7 +3,7 @@
 #include "OsgWidget.h"
 #include "OsgScene.h"
 
-#include <QtGui/QGridLayout>
+#include <QGridLayout>
 
 
 #include <osgQt/GraphicsWindowQt>

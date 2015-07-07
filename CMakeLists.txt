@@ -21,10 +21,34 @@ FOREACH(CONF ${CMAKE_CONFIGURATION_TYPES})        # For each configuration (Debu
 	ENDIF(MSVC)
 ENDFOREACH()
 
+
+SET(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} CACHE STRING "(EXPERIMENTAL) You may add additional search paths here. Use ; to separate multiple paths.")
+
 #CMake包
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
 
-FIND_PACKAGE(Qt4)
+#Qt
+IF(DESIRED_QT_VERSION)
+	IF(DESIRED_QT_VERSION MATCHES 5)
+		FIND_PACKAGE(Qt5Widgets)
+	ELSEIF(DESIRED_QT_VERSION MATCHES 4)
+		FIND_PACKAGE(Qt4)
+	ELSE()
+		FIND_PACKAGE(Qt3)
+	ENDIF()
+ELSE()
+	FIND_PACKAGE(Qt5Widgets QUIET)
+	
+	IF(NOT Qt5Widgets_FOUND)
+		FIND_PACKAGE(Qt4)
+		
+		IF(NOT Qt4_FOUND)
+			FIND_PACKAGE(Qt3)
+		ENDIF()
+	ENDIF()
+ENDIF()
+
+
 FIND_PACKAGE(OSG)
 FIND_PACKAGE(OSGANIMATION)
 FIND_PACKAGE(OSGFX)
@@ -45,7 +69,6 @@ FIND_PATH(OSG_GEN_DIR include/osg/Referenced)
 SET(ParticleEditor_DIR ${PROJECT_SOURCE_DIR})
 INCLUDE_DIRECTORIES(
 	${ParticleEditor_DIR}/include
-	${QT_INCLUDE_DIR}
 	${OSG_GEN_DIR}/include
 	)
 
@@ -54,10 +77,19 @@ LINK_DIRECTORIES(
 	${QT_LIBRARY_DIR}
 	${OSG_GEN_DIR}/lib
 	)
+	
+	
+IF( QT4_FOUND )
+    INCLUDE_DIRECTORIES( ${QT_INCLUDE_DIR} ${QT_QTCORE_INCLUDE_DIR} ${QT_QTGUI_INCLUDE_DIR}
+             ${QT_QTOPENGL_INCLUDE_DIR} )
+    LINK_DIRECTORIES( ${QT_LIBRARY_DIR} )
+ENDIF( QT4_FOUND )
+
 
 #Qt moc
-FILE(GLOB ALL_HEADER include/*.h)
-QT4_WRAP_CPP(MOC_SOURCES ${ALL_HEADER})
+#FILE(GLOB ALL_HEADER include/*.h)
+#QT4_WRAP_CPP(MOC_SOURCES ${ALL_HEADER})
+SET(CMAKE_AUTO_MOC TRUE)
 
 #设置源码
 SET(ParticleEditor_TARGET_H
@@ -80,21 +112,30 @@ ADD_EXECUTABLE(ParticleEditor
 	${ParticleEditor_TARGET_H}
 	${ParticleEditor_TARGET_SRC}
 	)
+	
+IF(QT4_FOUND)
+	TARGET_LINK_LIBRARIES( ParticleEditor
+		debug qtmaind       optimized qtmain
+		debug QtCored4      optimized QtCore4
+		debug QtGuid4       optimized QtGui4
+		debug QtOpenGLd4    optimized QtOpenGL4
+		)
+
+ELSE( Qt5Widgets_FOUND )
+    qt5_use_modules( ParticleEditor Widgets OpenGL )
+ENDIF()
 
 TARGET_LINK_LIBRARIES( ParticleEditor
-    debug qtmaind       optimized qtmain
-    debug QtCored4      optimized QtCore4
-    debug QtGuid4       optimized QtGui4
-    debug QtOpenGLd4    optimized QtOpenGL4
-
     debug osgd          optimized osg
     debug osgDBd        optimized osgDB
     debug osgGAd        optimized osgGA
     debug osgViewerd    optimized osgViewer
-    debug osgQtd	optimized osgQt
+    debug osgQtd		optimized osgQt
+	debug OpenThreadsd	optimized OpenThreads
 )
 
 SET_TARGET_PROPERTIES( ParticleEditor PROPERTIES "ARCHIVE_OUTPUT_DIRECTORY" "${OUTPUT_LIBDIR}" )
 SET_TARGET_PROPERTIES( ParticleEditor PROPERTIES "RUNTIME_OUTPUT_DIRECTORY" "${OUTPUT_BINDIR}" )
 SET_TARGET_PROPERTIES( ParticleEditor PROPERTIES "LIBRARY_OUTPUT_DIRECTORY" "${OUTPUT_LIBDIR}" )
+
 
