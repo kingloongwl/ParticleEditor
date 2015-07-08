@@ -5,21 +5,20 @@
 /*
  OSG场景的初始化以及场景属性的保存
   */
-  
+
+#include "Singleton.h"
+
 #include <osg/Referenced>
 #include <osg/Group>
 #include <osgViewer/Viewer>
  
-class OsgScene : public osg::Referenced
+class OsgScene : public Singleton<OsgScene>
 {
 public:
 	OsgScene();
 	~OsgScene();
 	
 	osgViewer::Viewer* getViewer();
-public:
-	static osg::ref_ptr<OsgScene> getInstance();
-	static osg::ref_ptr<OsgScene> _sInstance;
 	
 private:
 	osg::ref_ptr<osgViewer::Viewer> _viewer;

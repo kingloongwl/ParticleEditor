@@ -7,7 +7,7 @@
 */
 
 #include <QMainWindow>
-
+#include <QMenu>
 
 class MainWindow : public QMainWindow
 {
@@ -15,6 +15,12 @@ public:
 	MainWindow();
 	~MainWindow();
 	
+private:
+	void initFileMenu();
+
+private:
+	QMenu _fileMenu;
 };
 
 #endif
+

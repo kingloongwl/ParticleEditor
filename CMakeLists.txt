@@ -74,7 +74,6 @@ INCLUDE_DIRECTORIES(
 
 #依赖库
 LINK_DIRECTORIES(
-	${QT_LIBRARY_DIR}
 	${OSG_GEN_DIR}/lib
 	)
 	
@@ -97,6 +96,8 @@ SET(ParticleEditor_TARGET_H
 	include/OsgScene.h
 	include/OsgWidget.h
 	include/SquareGrid.h
+	include/ParticleNode.h
+	include/Singleton.h
 
 	)
 
@@ -106,6 +107,7 @@ SET(ParticleEditor_TARGET_SRC
 	src/OsgScene.cpp
 	src/OsgWidget.cpp
 	src/SquareGrid.cpp
+	src/ParticleNode.cpp
 	)
 
 ADD_EXECUTABLE(ParticleEditor
@@ -121,7 +123,7 @@ IF(QT4_FOUND)
 		debug QtOpenGLd4    optimized QtOpenGL4
 		)
 
-ELSE( Qt5Widgets_FOUND )
+ELSEIF( Qt5Widgets_FOUND )
     qt5_use_modules( ParticleEditor Widgets OpenGL )
 ENDIF()
 
@@ -132,6 +134,7 @@ TARGET_LINK_LIBRARIES( ParticleEditor
     debug osgViewerd    optimized osgViewer
     debug osgQtd		optimized osgQt
 	debug OpenThreadsd	optimized OpenThreads
+	debug osgParticled	optimized osgParticle
 )
 
 SET_TARGET_PROPERTIES( ParticleEditor PROPERTIES "ARCHIVE_OUTPUT_DIRECTORY" "${OUTPUT_LIBDIR}" )

@@ -11,7 +11,7 @@
 OsgWidget::OsgWidget( QWidget *parent, Qt::WindowFlags f )
 : QWidget( parent, f )
 {
-	_viewer = OsgScene::getInstance()->getViewer();
+	_viewer = OsgScene::getInstance().getViewer();
 	
 	if ( _viewer.valid() && _viewer->getCamera() )
 	{

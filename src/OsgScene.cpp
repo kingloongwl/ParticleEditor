@@ -1,6 +1,7 @@
 ﻿
 #include "OsgScene.h"
 #include "SquareGrid.h"
+#include "ParticleNode.h"
 
 #include <osgGA/StateSetManipulator>
 #include <osgGA/TrackballManipulator>
@@ -8,7 +9,6 @@
 #include <osgQt/GraphicsWindowQt>
 #include <osg/DisplaySettings>
 
-osg::ref_ptr<OsgScene> OsgScene::_sInstance = NULL;
 
 OsgScene::OsgScene()
 {
@@ -46,9 +46,13 @@ OsgScene::OsgScene()
 	
 	
 	_sceneRoot = new osg::Group;
-	_sceneRoot->addChild( new SquareGrid );
 	_viewer->setSceneData( _sceneRoot );
+
+	//添加网格
+	_sceneRoot->addChild(new SquareGrid);
 	
+	//添加粒子节点
+	_sceneRoot->addChild(new ParticleNode);
 }
 
 OsgScene::~OsgScene()
@@ -56,15 +60,6 @@ OsgScene::~OsgScene()
 
 }
 
-osg::ref_ptr<OsgScene> OsgScene::getInstance()
-{
-	if ( OsgScene::_sInstance == NULL )
-	{
-		OsgScene::_sInstance = new OsgScene();
-	}
-	
-	return OsgScene::_sInstance;
-}
 
 osgViewer::Viewer* OsgScene::getViewer()
 {
