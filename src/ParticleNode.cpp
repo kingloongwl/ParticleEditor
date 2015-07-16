@@ -4,8 +4,10 @@
 #include <osg/Geode>
 #include <osgParticle/ParticleSystemUpdater>
 
-ParticleNode::ParticleNode()
-:_lifeTime( 3.0 )
+ParticleNode::ParticleNode( int ID, const std::string &name )
+:_ID(ID)
+,_name( name )
+,_lifeTime( 3.0 )
 ,_sizeMin( 0.75 )
 ,_sizeMax( 3.0 )
 ,_alphaMin( 0.0 )

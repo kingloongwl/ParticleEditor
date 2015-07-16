@@ -19,6 +19,7 @@ public:
 	~OsgScene();
 	
 	osgViewer::Viewer* getViewer();
+	osg::Group*	getSceneRoot();
 	
 private:
 	osg::ref_ptr<osgViewer::Viewer> _viewer;

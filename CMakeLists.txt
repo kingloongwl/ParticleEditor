@@ -88,7 +88,7 @@ ENDIF( QT4_FOUND )
 #Qt moc
 #FILE(GLOB ALL_HEADER include/*.h)
 #QT4_WRAP_CPP(MOC_SOURCES ${ALL_HEADER})
-SET(CMAKE_AUTO_MOC TRUE)
+SET(CMAKE_AUTOMOC TRUE)
 
 #设置源码
 SET(ParticleEditor_TARGET_H
@@ -97,7 +97,10 @@ SET(ParticleEditor_TARGET_H
 	include/OsgWidget.h
 	include/SquareGrid.h
 	include/ParticleNode.h
+	include/ParticleNodeManager.h
+	include/ParticleTree.h
 	include/Singleton.h
+	include/SystemActions.h
 
 	)
 
@@ -108,6 +111,9 @@ SET(ParticleEditor_TARGET_SRC
 	src/OsgWidget.cpp
 	src/SquareGrid.cpp
 	src/ParticleNode.cpp
+	src/ParticleNodeManager.cpp
+	src/ParticleTree.cpp
+	src/SystemActions.cpp
 	)
 
 ADD_EXECUTABLE(ParticleEditor
@@ -140,5 +146,4 @@ TARGET_LINK_LIBRARIES( ParticleEditor
 SET_TARGET_PROPERTIES( ParticleEditor PROPERTIES "ARCHIVE_OUTPUT_DIRECTORY" "${OUTPUT_LIBDIR}" )
 SET_TARGET_PROPERTIES( ParticleEditor PROPERTIES "RUNTIME_OUTPUT_DIRECTORY" "${OUTPUT_BINDIR}" )
 SET_TARGET_PROPERTIES( ParticleEditor PROPERTIES "LIBRARY_OUTPUT_DIRECTORY" "${OUTPUT_LIBDIR}" )
-
 

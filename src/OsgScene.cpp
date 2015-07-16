@@ -1,7 +1,6 @@
 ﻿
 #include "OsgScene.h"
 #include "SquareGrid.h"
-#include "ParticleNode.h"
 
 #include <osgGA/StateSetManipulator>
 #include <osgGA/TrackballManipulator>
@@ -51,8 +50,6 @@ OsgScene::OsgScene()
 	//添加网格
 	_sceneRoot->addChild(new SquareGrid);
 	
-	//添加粒子节点
-	_sceneRoot->addChild(new ParticleNode);
 }
 
 OsgScene::~OsgScene()
@@ -66,3 +63,7 @@ osgViewer::Viewer* OsgScene::getViewer()
 	return _viewer.get();
 }
 
+osg::Group* OsgScene::getSceneRoot()
+{
+	return _sceneRoot.get();
+}

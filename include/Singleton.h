@@ -2,6 +2,8 @@
 #ifndef PARTICLEEDITOR_SINGLETON_H_
 #define PARTICLEEDITOR_SINGLETON_H_
 
+#define NULL 0
+
 template <class T>
 class Singleton
 {
