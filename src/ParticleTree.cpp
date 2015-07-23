@@ -2,6 +2,9 @@
 #include "ParticleTree.h"
 #include "ParticleNodeManager.h"
 
+#include <QMenu>
+#include <QContextMenuEvent>
+
 ParticleTree::ParticleTree()
 {
 	setHeaderHidden(true);
@@ -10,6 +13,10 @@ ParticleTree::ParticleTree()
 	rootItem->setText(0,"Root");
 
 	addTopLevelItem(rootItem);
+
+	_actionProperty = new QAction("Property", this);
+	connect(_actionProperty, SIGNAL(triggered()), this, SLOT(slotProperty()));
+
 }
 
 ParticleTree::~ParticleTree()
@@ -55,4 +62,23 @@ void ParticleTree::addParticleItem(int ID, const std::string &name)
 	item->setData(0, Qt::UserRole, ID);
 
 	rootItem->addChild(item);
+}
+
+void ParticleTree::slotProperty()
+{
+
+}
+
+void ParticleTree::contextMenuEvent(QContextMenuEvent *event)
+{
+	QTreeWidgetItem *item = itemAt(event->pos());
+	if (!item || !item->parent() )
+	{
+		return;
+	}
+
+	QMenu menu;
+	menu.addAction(_actionProperty);
+
+	menu.exec( QCursor::pos() );
 }
